@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=DocSurf
+Comment=The SynOS Document Surfer
+GenericName=file browser
+Exec=DocSurf
+Terminal=false
+Type=Application
+Icon=folder
+Categories=Application;Qt;System;FileTools;FileManager;
+StartupNotify=false

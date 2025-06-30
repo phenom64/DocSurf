@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gui name="kdfm"
+     version="1"
+     xmlns="http://www.kde.org/standards/kxmlgui/1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.kde.org/standards/kxmlgui/1.0
+                         http://www.kde.org/standards/kxmlgui/1.0/kxmlgui.xsd" >
+    <MenuBar>
+        <Menu name="file">
+            <text>&amp;File</text>
+            <Action name="actionProperties"/>
+            <Action name="actionExit"/>
+        </Menu>
+        <Menu name="edit">
+            <text>&amp;Edit</text>
+            <Action name="actionMkDir"/>
+            <Action name="actionDeleteSelection"/>
+            <Separator name="separator_0"/>
+            <Action name="actionCopy"/>
+            <Action name="actionCut"/>
+            <Action name="actionPaste"/>
+            <Action name="actionRename"/>
+            <Separator name="separator_1"/>
+            <Action name="actionShowHidden"/>
+            <Separator name="separator_2"/>
+            <Action name="actionRefresh"/>
+            <Action name="actionAddTab"/>
+            <Action name="actionOpenInTab"/>
+            <Separator name="separator_3"/>
+            <Action name="actionConfigure"/>
+        </Menu>
+        <Menu name="view">
+            <text>&amp;View</text>
+            <Action name="actionToolBar"/>
+        </Menu>
+        <Menu name="go">
+            <text>&amp;Go</text>
+            <Action name="actionGoUp"/>
+            <Action name="actionGoBack"/>
+            <Action name="actionGoForward"/>
+            <Separator name="separator_0"/>
+            <Action name="actionGoHome"/>
+        </Menu>
+        <Menu name="get">
+            <text>&amp;Get</text>
+            <Action name="actionGetFileName"/>
+            <Action name="actionGetFilePath"/>
+        </Menu>
+    </MenuBar>
+    <ToolBar name="mainToolBar">
+        <Action name="actionGoBack"/>
+        <Action name="actionGoForward"/>
+        <Separator name="separator_0"/>
+        <Action name ="actionViews_Icon"/>
+        <Action name ="actionViews_Detail"/>
+        <Action name ="actionViews_Column"/>
+        <Action name ="actionViews_Flow"/>
+        <Separator name="separator_1"/>
+        <Action name ="actionConfigure"/>
+        <Separator name="separator_1"/>
+        <Action name="actionGoHome"/>
+        <Separator name="separator_2"/>
+        <Action name="actionSort"/>
+        <Separator name="separator_3"/>
+        <Action name="actionShowHidden"/>
+        <Separator name="separator_4"/>
+        <Action name="actionStretcher"/>
+        <Separator name="separator_3"/>
+        <Action name="actionFilter"/>
+    </ToolBar>
+</gui>
