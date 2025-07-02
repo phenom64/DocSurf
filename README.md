@@ -14,7 +14,7 @@ Currently in **very early alpha**, DocSurf is a **work in progress** and is acti
   Leveraging the power of Qt and KDE Frameworks for native performance and deep integration.
   
 - **Cover Flow-inspired file browsing** *(WIP)*  
-  A visually immersive file preview mode reminiscent of classic skeuomorphic UI design.
+  A visually immersive file preview mode with a reflective dimensional carousel of icons.
   
 - **Custom “About Document Surfer” Window**  
   Unique branding and about page tailored for SynOS.
@@ -32,7 +32,7 @@ Currently in **very early alpha**, DocSurf is a **work in progress** and is acti
 
 ## 💾 Installation
 
-Installation has been tested on SynOS Canora (Beta 1) and should work on all Debian/Ubuntu-based Linux distributions.
+Installation has been tested on SynOS Canora (Beta 1) and should work on all Debian/Ubuntu-based Linux distributions with a Qt 5 based desktop environment.
 
 ```bash
 git clone https://github.com/phenom64/DocSurf.git
@@ -49,17 +49,17 @@ sudo make install
 ## 🚧 Project Status
     ⚠️ DocSurf is currently in very early alpha.
     While it compiles and runs, many components such as toolbar UI,
-    full menu integration, and advanced view modes (like Cover Flow) are incomplete or experimental.
+    full menu integration, and advanced view modes (like Cover Flow) are incomplete or experimental. Retina Display support is also currently lacklustre.
 
-Expect bugs, unfinished features, and rough edges. We welcome collaboration and testing, but this is not ready for production use—yet.
+Expect bugs, unfinished features, and rough edges. We welcome collaboration and testing, but this is not ready for production use.
 
 ---
 
 ## 🙏 Credits
-DocSurf is a heavily modified and actively maintained fork of <a href="https://sourceforge.net/projects/kdfm/">KDFM</a>, an open-source file manager originally developed by Robert Metsaranta. Immense gratitude to Robert for his excellent foundational work.
+DocSurf is a modified and actively maintained fork of <a href="https://sourceforge.net/projects/kdfm/">KDFM</a>, an open-source file manager originally developed by Robert Metsaranta. Immense gratitude to Robert for his excellent foundational work.
 
 ---
 
 ## 🧠 Philosophy & Goals
-DocSurf is more than just a file manager. It embodies a design rebellion against bland utility. We believe your file explorer should spark joy, nostalgia, and control—without sacrificing power.
-As a key part of the SynOS ecosystem, DocSurf will continue to evolve toward a full-featured, skeuomorphic, and deeply human file browsing experience.
+DocSurf is more than just a file manager. It embodies a design rebellion against bland utility. We believe your file explorer should spark joy, nostalgia, and control without sacrificing power.
+As a keystone of the SynOS Atmo design language ecosystem, DocSurf will continue to evolve toward a full-featured, skeuomorphic, and deeply human file browsing experience.
