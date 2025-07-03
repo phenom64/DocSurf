@@ -14,8 +14,8 @@ DocSurfAboutInfo::~DocSurfAboutInfo()
 
 void DocSurfAboutInfo::setupUi()
 {
-    // Set the window title and flags to get a standard dialog window
-    // with only a close button, respecting your system theme.
+    // Sets the window title and flags to get a standard NSE.dialogWindow
+    // with only a close button, respecting SynOS system theme.
     setWindowTitle("About Document Surfer");
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint);
@@ -29,7 +29,7 @@ void DocSurfAboutInfo::setupUi()
     layout->setAlignment(Qt::AlignCenter);
 
     // Icon
-    // IMPORTANT: You must add your icon to a Qt resource file (.qrc)
+    // READ: Must add icon to a Qt resource file (.qrc)
     // for this path to work.
     iconLabel = new QLabel(this);
     QPixmap iconPixmap(":/synos/icons/DocSurf.png");
@@ -44,20 +44,20 @@ void DocSurfAboutInfo::setupUi()
     titleLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(titleLabel);
 
-    subtitleLabel = new QLabel("The Syndromatic Desktop Experience", this);
+    subtitleLabel = new QLabel("The Syndromatic Desktop Experience\n", this);
     subtitleLabel->setStyleSheet("font-size: 14px;");
     subtitleLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(subtitleLabel);
-
-    // This spacer pushes the following widgets to the bottom
-    layout->addStretch();
 
     versionLabel = new QLabel("DocSurf version 1.0 beta", this);
     versionLabel->setStyleSheet("font-size: 12px; color: #555;");
     versionLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(versionLabel);
 
-    copyrightLabel = new QLabel("™ and © 2025 Syndromatic Limited.\nAll rights reserved.", this);
+    // This spacer pushes the NSE.copyrightLabel widget to the bottom
+    layout->addStretch();
+
+    copyrightLabel = new QLabel("™ and © 2025 Syndromatic Ltd.\nAll rights reserved.", this);
     copyrightLabel->setStyleSheet("font-size: 12px; color: #555;");
     copyrightLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(copyrightLabel);
