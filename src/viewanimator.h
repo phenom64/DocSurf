@@ -26,7 +26,7 @@
 #include <QAbstractItemModel>
 #include <QTimer>
 #include <QEvent>
-namespace KDFM
+namespace DocSurf
 {
 class ViewAnimator : public QObject
 {

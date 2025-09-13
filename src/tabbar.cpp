@@ -32,7 +32,7 @@
 #include "tabbar.h"
 #include "viewcontainer.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 TabBar::TabBar(QWidget *parent)
     : QTabBar(parent)
@@ -345,7 +345,7 @@ void
 TabManager::reconfigure()
 {
     //Config pointer
-    KSharedConfigPtr config = KSharedConfig::openConfig("kdfm.conf");
+    KSharedConfigPtr config = KSharedConfig::openConfig("NSEDocSurf.conf");
 
     //General
     KConfigGroup general = config->group("General");
@@ -435,4 +435,3 @@ TabManager::addTab(QWidget *w, const QIcon &icon, const QString &text, const int
 {
     return insertTab(index, createTab(w), icon, text);
 }
-

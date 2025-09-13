@@ -75,7 +75,7 @@
 #include "actions.h"
 #include "widgets.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 class DockWidget : public QDockWidget
 {
@@ -155,7 +155,7 @@ class MainWindow::Private
 public:
     Private(MainWindow *win) : q(win) {}
     MainWindow * const q;
-    KDFM::StatusBar *statusBar;
+    DocSurf::StatusBar *statusBarWidget;
     DockWidget *placesDock;
     QString statusMessage, slctnMessage;
     QItemSelection *currentSelection;
@@ -218,13 +218,15 @@ MainWindow::MainWindow(const QStringList &arguments)
     : KParts::MainWindow()
     , d(new MainWindow::Private(this))
 {
-    setObjectName("KDFM::MainWindow#");
+    setComponentName(QStringLiteral("DocSurf"), QStringLiteral("DocSurf"));
+    setXMLFile(QStringLiteral("DocSurfui.rc"));
+    setObjectName("DocSurf::MainWindow#");
     d->actionContainer = new ActionContainer(this);
     d->tabWin = new QMainWindow(this, Qt::Widget);
-    d->statusBar = new KDFM::StatusBar(this);
+    d->statusBarWidget = new DocSurf::StatusBar(this);
     d->placesDock = new DockWidget(d->tabWin, tr("Places"), Qt::SubWindow, Qt::LeftDockWidgetArea);
     d->placesView = new FilePlacesView();
-    d->iconSizeSlider = new QSlider(d->statusBar);
+    d->iconSizeSlider = new QSlider(statusBar());
     d->tabBar = new TabBar(this);
     d->tabManager = new TabManager(d->tabWin);
     d->tabManager->setTabBar(d->tabBar);
@@ -241,8 +243,8 @@ MainWindow::MainWindow(const QStringList &arguments)
     d->searchBox = 0;
     d->adaptor = new DBusAdaptor(this);
 
-    QDBusConnection::sessionBus().registerService("org.kde.kdfm");
-    QDBusConnection::sessionBus().registerObject("/KdfmAdaptor", this);
+    QDBusConnection::sessionBus().registerService("com.syndromatic.docsurf");
+    QDBusConnection::sessionBus().registerObject("/DocSurfAdaptor", this);
 
 //    setAttribute(Qt::WA_TranslucentBackground, true); //neded for konsolepart these days.. ye, its argb, so cant embed argb win inside rgb win
 //    setAttribute(Qt::WA_NoSystemBackground, false);
@@ -281,7 +283,7 @@ MainWindow::MainWindow(const QStringList &arguments)
     }
     if (d->tabBar->count() == 0)
     {
-        KSharedConfigPtr config = KSharedConfig::openConfig("kdfm.conf");
+        KSharedConfigPtr config = KSharedConfig::openConfig("NSEDocSurf.conf");
         KConfigGroup general = config->group("General");
         QString startPath = general.readEntry("Location");
         if (startPath.isEmpty())
@@ -301,7 +303,7 @@ MainWindow::MainWindow(const QStringList &arguments)
 
     setCentralWidget(center);
     setUnifiedTitleAndToolBarOnMac(true);
-    setStatusBar(d->statusBar);
+    setStatusBar(d->statusBarWidget);
 
     d->actionContainer->action(ActionContainer::ShowMenuBar)->setChecked(true);
 //    Actions::action(Actions::ShowPathBar)->setChecked(Store::settings()->value("pathVisible", true).toBool());
@@ -354,8 +356,8 @@ MainWindow::setViewIconSize(int size)
     QToolTip *tip;
     QPoint pt;
     pt.setX(mapToGlobal(d->iconSizeSlider->pos()).x());
-    pt.setY(mapToGlobal(d->statusBar->pos()).y());
-    if (d->statusBar->isVisible())
+    pt.setY(mapToGlobal(statusBar()->pos()).y());
+    if (statusBar()->isVisible())
         tip->showText(pt, d->iconSizeSlider->toolTip());
 }
 
@@ -453,7 +455,7 @@ MainWindow::updateStatusBar(ViewContainer *c)
             d->statusLabel[0]->clear();
             d->statusLabel[1]->clear();
             d->statusMessage = cont->url().toString();
-            d->statusBar->setMessage(d->statusMessage);
+            static_cast<DocSurf::StatusBar*>(statusBar())->setMessage(d->statusMessage);
             updateCapacityBar(cont->url());
         }
         return;
@@ -488,7 +490,7 @@ MainWindow::updateStatusBar(ViewContainer *c)
         d->statusLabel[0]->clear();
     else
         d->statusLabel[0]->setText(d->slctnMessage);
-    d->statusBar->setMessage(d->statusMessage);
+    static_cast<DocSurf::StatusBar*>(statusBar())->setMessage(d->statusMessage);
 }
 
 void
@@ -761,15 +763,14 @@ MainWindow::connectActions()
             connect(d->searchBox, &SearchBox::textChanged, this, &MainWindow::filterCurrentTab);
         }
     }
-    QMenu *helpMenu = menuBar()->findChild<QMenu*>("help");
-    if (!helpMenu) {
-        helpMenu = menuBar()->addMenu(tr("&Help"));
-        helpMenu->setObjectName("help");
+    // Ensure a standard About action exists and route to our dialog
+    QAction *aboutAction = actionCollection()->action("help_about_app");
+    if (!aboutAction) {
+        aboutAction = actionCollection()->addAction("help_about_app");
+        aboutAction->setText(tr("About the Document Surfer"));
     }
-
-    QAction *aboutAction = new QAction(tr("About the Document Surfer"), this);
+    disconnect(aboutAction, nullptr, nullptr, nullptr);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::showAboutInfo);
-    helpMenu->addAction(aboutAction);
     connect(d->actionContainer->action(ActionContainer::DeleteSelection), &QAction::triggered, this, [this](){activeContainer()->deleteCurrentSelection();});
     connect(d->actionContainer->action(ActionContainer::GoHome), &QAction::triggered, this, [this](){activeContainer()->goHome();});
     connect(d->actionContainer->action(ActionContainer::GoBack), &QAction::triggered, this, [this](){activeContainer()->goBack();});
@@ -807,31 +808,31 @@ MainWindow::connectActions()
 void
 MainWindow::setupStatusBar()
 {
-    d->statusBar->addRightWidget(d->statusLabel[1]);
+    static_cast<DocSurf::StatusBar*>(statusBar())->addRightWidget(d->statusLabel[1]);
 
     d->iconSizeSlider->setFixedWidth(80);
     d->iconSizeSlider->setOrientation(Qt::Horizontal);
     d->iconSizeSlider->setRange(1,16);
     d->iconSizeSlider->setSingleStep(1);
     d->iconSizeSlider->setPageStep(1);
-    d->statusBar->addRightWidget(d->iconSizeSlider);
+    static_cast<DocSurf::StatusBar*>(statusBar())->addRightWidget(d->iconSizeSlider);
     connect(d->iconSizeSlider, &QSlider::valueChanged, this, &MainWindow::setViewIconSize);
 
-    QToolButton *placesBtn = new QToolButton(d->statusBar);
+    QToolButton *placesBtn = new QToolButton(statusBar());
     placesBtn->setIcon(QIcon::fromTheme("inode-directory"));
     placesBtn->setIconSize(QSize(16, 16));
     placesBtn->setCheckable(true);
-    d->statusBar->addLeftWidget(placesBtn);
+    static_cast<DocSurf::StatusBar*>(statusBar())->addLeftWidget(placesBtn);
     connect(placesBtn, &QToolButton::clicked, d->placesDock, &DockWidget::toggleVisibility);
     connect(d->placesDock, &DockWidget::visibilityChanged, placesBtn, &QToolButton::setChecked);
 
     if (d->terminalDock)
     {
-        QToolButton *terminalBtn = new QToolButton(d->statusBar);
+        QToolButton *terminalBtn = new QToolButton(statusBar());
         terminalBtn->setIcon(QIcon::fromTheme("terminal"));
         terminalBtn->setIconSize(QSize(16, 16));
         terminalBtn->setCheckable(true);
-        d->statusBar->addLeftWidget(terminalBtn);
+        static_cast<DocSurf::StatusBar*>(statusBar())->addLeftWidget(terminalBtn);
         connect(terminalBtn, &QToolButton::clicked, d->terminalDock, &DockWidget::toggleVisibility);
         connect(d->terminalDock, &DockWidget::visibilityChanged, terminalBtn, &QToolButton::setChecked);
 //        connect(d->terminalDock, &DockWidget::visibilityChanged, this, [this](const bool visible)
@@ -843,12 +844,12 @@ MainWindow::setupStatusBar()
     }
 
     d->placesDock->setLocked(true);
-    QToolButton *dockLock = new QToolButton(d->statusBar);
+    QToolButton *dockLock = new QToolButton(statusBar());
     dockLock->setIcon(QIcon::fromTheme("emblem-locked"));
     dockLock->setIconSize(QSize(16, 16));
     dockLock->setCheckable(true);
     dockLock->setChecked(d->placesDock->isLocked());
-    d->statusBar->addLeftWidget(dockLock);
+    static_cast<DocSurf::StatusBar*>(statusBar())->addLeftWidget(dockLock);
     connect(dockLock, &QToolButton::clicked, d->placesDock, &DockWidget::setLocked);
     if (d->terminalDock)
     {
@@ -856,8 +857,8 @@ MainWindow::setupStatusBar()
         connect(dockLock, &QToolButton::clicked, d->terminalDock, &DockWidget::setLocked);
     }
     connect(dockLock, &QToolButton::clicked, this, [this](const bool lock){static_cast<QToolButton*>(sender())->setIcon(QIcon::fromTheme(lock?"emblem-locked":"emblem-unlocked"));});
-    d->statusBar->addLeftWidget(d->capacityBar);
-    d->statusBar->addLeftWidget(d->statusLabel[0]);
+    static_cast<DocSurf::StatusBar*>(statusBar())->addLeftWidget(d->capacityBar);
+    static_cast<DocSurf::StatusBar*>(statusBar())->addLeftWidget(d->statusLabel[0]);
 }
 
 QString

@@ -24,7 +24,7 @@
 
 #include <QTreeView>
 
-namespace KDFM
+namespace DocSurf
 {
 class ViewContainer;
 class DetailsView : public QTreeView

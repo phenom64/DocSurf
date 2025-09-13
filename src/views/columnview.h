@@ -28,7 +28,7 @@
 
 class QTimer;
 
-namespace KDFM
+namespace DocSurf
 {
 
 class Grip : public QWidget

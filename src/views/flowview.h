@@ -28,7 +28,7 @@ class QModelIndex;
 class QSplitter;
 class QItemSelectionModel;
 class QItemSelection;
-namespace KDFM
+namespace DocSurf
 {
 class Flow;
 class DetailsView;

@@ -25,7 +25,7 @@
 
 class QAbstractScrollArea;
 
-namespace KDFM
+namespace DocSurf
 {
 
 class FileItemDelegate : public KFileItemDelegate

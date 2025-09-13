@@ -30,7 +30,7 @@
 #include <QDBusAbstractAdaptor>
 
 class QSlider;
-namespace KDFM
+namespace DocSurf
 {
 
 class Container : public QWidget/*, public Configurable*/
@@ -115,7 +115,7 @@ private:
 class DBusAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.kde.kdfm")
+    Q_CLASSINFO("D-Bus Interface", "com.syndromatic.docsurf")
 
 public:
     DBusAdaptor(MainWindow *parent = 0) : QDBusAbstractAdaptor(parent), m_win(parent){}

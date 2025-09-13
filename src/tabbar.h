@@ -30,7 +30,7 @@
 class QHBoxLayout;
 class QToolBar;
 class QToolButton;
-namespace KDFM
+namespace DocSurf
 {
 class ViewContainer;
 class TabBar;

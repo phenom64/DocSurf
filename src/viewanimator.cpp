@@ -24,7 +24,7 @@
 #include <QTreeView>
 #include <QScrollBar>
 
-using namespace KDFM;
+using namespace DocSurf;
 
 QMap<QAbstractItemView *, ViewAnimator *> ViewAnimator::s_views;
 

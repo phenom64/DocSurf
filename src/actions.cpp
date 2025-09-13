@@ -38,7 +38,7 @@
 #include "searchbox.h"
 #include "mainwindow.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 class WidgetAction : public QWidgetAction
 {

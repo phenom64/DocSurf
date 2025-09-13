@@ -36,7 +36,7 @@
 #include "flowview.h"
 #include "mainwindow.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 FlowView::FlowView(QWidget *parent)
     : QAbstractItemView(parent)

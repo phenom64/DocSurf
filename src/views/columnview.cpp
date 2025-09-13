@@ -38,7 +38,7 @@
 
 #include <fsmodel.h>
 
-using namespace KDFM;
+using namespace DocSurf;
 
 #define KEY "colWidth"
 
@@ -121,7 +121,7 @@ ColumnView::ColumnView(QWidget *parent) : QAbstractItemView(parent)
     setDefaultDropAction(Qt::MoveAction);
     setAcceptDrops(true);
     setDragEnabled(true);
-    setEditTriggers(QAbstractItemView::SelectedClicked|QAbstractItemView::EditKeyPressed);
+    setEditTriggers(QAbstractItemView::NoEditTriggers); // Disable click editing
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
@@ -512,21 +512,15 @@ Column::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Escape)
         clearSelection();
-    if (e->key() == Qt::Key_Return
-         && e->modifiers() == Qt::NoModifier
-         && state() == NoState)
+    if ((e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) && state() == NoState)
     {
-        if (selectionModel()->selectedIndexes().count())
-            foreach (const QModelIndex &index, selectionModel()->selectedIndexes())
-                if (!index.column())
-                    emit opened(index);
-        e->accept();
-        return;
+        if (currentIndex().isValid()) {
+            edit(currentIndex()); // Rename on Enter
+            e->accept();
+            return;
+        }
     }
-    if (e->key() == Qt::Key_Meta)
-        setDragEnabled(false);
     QListView::keyPressEvent(e);
-//    DViewBase::keyPressEvent(e);
 }
 
 void
@@ -556,17 +550,6 @@ Column::mouseReleaseEvent(QMouseEvent *e)
             m_pressIdx = QModelIndex();
             return;
         }
-        if (false/*Store::config.views.singleClick*/
-                && e->button() == Qt::LeftButton
-                && !e->modifiers())
-        {
-            if (m_pressIdx.data(FS::DirModel::FileItemRole).value<KFileItem>().isDir())
-                emit expand(m_pressIdx);
-            else
-                emit opened(m_pressIdx);
-            m_pressIdx = QModelIndex();
-            return;
-        }
     }
     QListView::mouseReleaseEvent(e);
 }
@@ -577,13 +560,9 @@ Column::mouseDoubleClickEvent(QMouseEvent *e)
     if (m_pressIdx.isValid() && m_pressIdx == indexAt(e->pos()))
     {
         e->accept();
-        if (true /*Store::config.views.singleClick*/)
         if (e->button() == Qt::LeftButton)
         {
-            if (m_pressIdx.data(FS::DirModel::FileItemRole).value<KFileItem>().isDir())
-                emit expand(m_pressIdx);
-            else
-                emit opened(m_pressIdx);
+            emit opened(m_pressIdx);
             m_pressIdx = QModelIndex();
             return;
         }
@@ -598,7 +577,7 @@ Column::wheelEvent(QWheelEvent *e)
     {
         MainWindow *mw = static_cast<MainWindow *>(window());
         if (QSlider *s = mw->iconSizeSlider())
-            s->setValue(s->value()+(e->delta()>0?1:-1));
+            s->setValue(s->value() + (e->angleDelta().y() > 0 ? 1 : -1));
     }
     else
         QListView::wheelEvent(e);

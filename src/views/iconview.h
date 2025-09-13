@@ -25,7 +25,7 @@
 #include <KF5/KItemViews/KCategorizedView>
 #include "../widgets.h"
 
-namespace KDFM
+namespace DocSurf
 {
 
 class IconView : public KCategorizedView, public Configurable
@@ -51,6 +51,7 @@ protected:
     void wheelEvent(QWheelEvent *even);
     void contextMenuEvent(QContextMenuEvent *e);
     void resizeEvent(QResizeEvent *e);
+    void keyPressEvent(QKeyEvent *event);
 
 protected slots:
     void updateLayout();

@@ -32,7 +32,7 @@
 #include "mainwindow.h"
 #include "objects.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 class DetailsDelegate : public FileItemDelegate
 {
@@ -73,7 +73,7 @@ DetailsView::DetailsView(QWidget *parent)
     setSelectionMode(ExtendedSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSortingEnabled(true);
-    setEditTriggers(SelectedClicked | EditKeyPressed);
+    setEditTriggers(QAbstractItemView::NoEditTriggers); // Disable click editing
     setExpandsOnDoubleClick(false);
     setDragDropMode(DragDrop);
     setDropIndicatorShown(true);
@@ -122,11 +122,7 @@ DetailsView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     QTreeView::mouseDoubleClickEvent(event);
     const QModelIndex &index = indexAt(event->pos());
-    if (index.isValid()
-            && true/*Store::config.views.singleClick*/
-            && !event->modifiers()
-            && event->button() == Qt::LeftButton
-            && state() == NoState)
+    if (index.isValid() && event->button() == Qt::LeftButton && !event->modifiers() && state() == NoState)
         emit opened(index);
 }
 
@@ -155,18 +151,14 @@ DetailsView::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
         clearSelection();
-    if (event->key() == Qt::Key_Return
-         && event->modifiers() == Qt::NoModifier
-         && state() == NoState)
+    if ((event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) && state() == NoState)
     {
-        if (selectionModel()->selectedIndexes().count())
-            foreach (const QModelIndex &index, selectionModel()->selectedIndexes())
-                if (!index.column())
-                    emit opened(index);
-        event->accept();
-        return;
+        if (currentIndex().isValid()) {
+            edit(currentIndex()); // Rename on Enter
+            event->accept();
+            return;
+        }
     }
-//    DViewBase::keyPressEvent(event);
     QTreeView::keyPressEvent(event);
 }
 
@@ -224,7 +216,7 @@ DetailsView::wheelEvent(QWheelEvent *e)
     {
         MainWindow *mw = static_cast<MainWindow *>(window());
         if (QSlider *s = mw->iconSizeSlider())
-            s->setValue(s->value()+(e->delta()>0?1:-1));
+            s->setValue(s->value() + (e->angleDelta().y() > 0 ? 1 : -1));
     }
     else
         QTreeView::wheelEvent(e);

@@ -1,7 +1,7 @@
 
 #include <KFilePlacesView>
 
-namespace KDFM
+namespace DocSurf
 {
 
 class FilePlacesView : public KFilePlacesView

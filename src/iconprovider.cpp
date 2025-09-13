@@ -27,7 +27,7 @@
 #include <QStyleOption>
 #include <QPainterPath>
 
-using namespace KDFM;
+using namespace DocSurf;
 
 const QPolygon
 IconProvider::triangle(bool back, int size)

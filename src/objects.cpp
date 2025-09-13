@@ -33,7 +33,7 @@
 #include "fsmodel.h"
 #include "gfx/fx.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 QPixmap *FileItemDelegate::s_shadowData(0);
 
@@ -190,7 +190,7 @@ ScrollAnimator::processWheelEvent(QWheelEvent *e)
     if (e->orientation() == Qt::Horizontal || e->modifiers())
         return false;
     const bool wasUp(m_up);
-    m_up = e->delta() > 0;
+    m_up = e->angleDelta().y() > 0;
     if (m_up != wasUp)
         m_delta = 0;
 

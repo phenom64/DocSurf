@@ -35,7 +35,7 @@ class QModelIndex;
 class QAbstractItemView;
 class KFilePlacesModel;
 typedef QList<QModelIndex> QModelIndexList;
-namespace KDFM
+namespace DocSurf
 {
 class FlowView;
 class ColumnView;

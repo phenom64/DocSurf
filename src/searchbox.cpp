@@ -33,7 +33,7 @@
 #include "fsmodel.h"
 #include "viewcontainer.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 SearchTypeSelector::SearchTypeSelector(SearchBox *parent) : Button(parent), m_searchBox(parent)
 {

@@ -68,7 +68,7 @@
 #include "searchbox.h"
 #include "actions.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 QString
 ViewContainer::prettySize(quint64 bytes)
@@ -180,7 +180,7 @@ ViewContainer::~ViewContainer()
 void
 ViewContainer::reconfigure()
 {
-    KConfigGroup config = KSharedConfig::openConfig("kdfm.conf")->group("Views");
+    KConfigGroup config = KSharedConfig::openConfig("NSEDocSurf.conf")->group("Views");
     setIconSize(config.readEntry("IconSize", 48/3)*16);
 }
 
@@ -476,5 +476,3 @@ ViewContainer::View ViewContainer::currentViewType() const { return d->currentVi
 #define D_VIEW(_TYPE_, _METHOD_) _TYPE_##View *ViewContainer::_METHOD_##View() { return static_cast<_TYPE_##View *>(d->view[_TYPE_]); }
     D_VIEW(Icon, icon) D_VIEW(Details, details) D_VIEW(Column, column) D_VIEW(Flow, flow)
 #undef D_VIEW
-
-

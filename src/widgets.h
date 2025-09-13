@@ -35,7 +35,7 @@ class QHBoxLayout;
 class QLabel;
 class QTimer;
 class QFrame;
-namespace KDFM
+namespace DocSurf
 {
 
 class Button : public QWidget

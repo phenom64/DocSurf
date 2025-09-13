@@ -33,7 +33,7 @@
 class QFileSystemWatcher;
 class QMenu;
 
-namespace KDFM
+namespace DocSurf
 {
 
 namespace FS
@@ -146,7 +146,7 @@ template<typename T> static inline bool writeDesktopValue(const QDir &dir, const
     if (dir.isAbsolute() && QFileInfo(dir.path()).isWritable())
     {
         QSettings settings(dir.absoluteFilePath(".directory"), QSettings::IniFormat);
-        settings.beginGroup("DFM");
+        settings.beginGroup("DocSurf");
         settings.setValue(key, v);
         settings.endGroup();
         return true;
@@ -159,7 +159,7 @@ template<typename T> static inline bool writeDesktopValue(const QDir &dir, const
     else
         return false;
     newKey.replace("/", "_");
-    QSettings settings("dfm", "desktopFile");
+    QSettings settings("DocSurf", "desktopFile");
     settings.beginGroup(newKey);
     settings.setValue(key, v);
     settings.endGroup();
@@ -176,7 +176,7 @@ template<typename T> static inline T getDesktopValue(const QDir &dir, const QStr
     if (dir.isAbsolute() && fi.isReadable() && fi.isAbsolute())
     {
         QSettings settings(fi.filePath(), QSettings::IniFormat);
-        settings.beginGroup("DFM");
+        settings.beginGroup("DocSurf");
         var = settings.value(key);
         settings.endGroup();
     }
@@ -190,7 +190,7 @@ template<typename T> static inline T getDesktopValue(const QDir &dir, const QStr
         else
             return T();
         newKey.replace("/", "_");
-        QSettings settings("dfm", "desktopFile");
+        QSettings settings("DocSurf", "desktopFile");
         settings.beginGroup(newKey);
         var = settings.value(key);
         settings.endGroup();
@@ -208,7 +208,7 @@ static void getSorting(const QString &file, int &sortCol, Qt::SortOrder &order)
 {
     const QDir dir(file);
     QSettings settings(dir.absoluteFilePath(".directory"), QSettings::IniFormat);
-    settings.beginGroup("DFM");
+    settings.beginGroup("DocSurf");
     QVariant varCol = settings.value("sortCol");
     QVariant varOrd = settings.value("sortOrd");
     if (varCol.isValid() && varOrd.isValid())

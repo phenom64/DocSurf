@@ -34,7 +34,7 @@
 #include "widgets.h"
 #include "iconprovider.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 #define STEPS 24
 #define INTERVAL 40

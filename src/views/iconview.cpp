@@ -52,7 +52,7 @@
 #include "objects.h"
 #include "fsmodel.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 //class ViewAdapter : public KAbstractViewAdapter
 //{
@@ -344,7 +344,7 @@ IconView::IconView(QWidget *parent)
 //    setItemDelegate(new FileItemDelegate(this));
     CategoryDrawer *drawer = new CategoryDrawer(this);
     setCategoryDrawer(drawer);
-
+    setEditTriggers(QAbstractItemView::NoEditTriggers); // Disable click editing
     reconfigure();
 }
 
@@ -360,7 +360,7 @@ IconView::textLines() const
 void
 IconView::reconfigure()
 {
-    KConfigGroup config = KSharedConfig::openConfig("kdfm.conf")->group("Views");
+    KConfigGroup config = KSharedConfig::openConfig("NSEDocSurf.conf")->group("Views");
     d->textLines = config.readEntry("IconTextLines", 3);
     updateLayout();
 }
@@ -396,11 +396,7 @@ IconView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     KCategorizedView::mouseDoubleClickEvent(event);
     const QModelIndex &index = indexAt(event->pos());
-    if (index.isValid()
-            && true/*Store::config.views.singleClick*/
-            && !event->modifiers()
-            && event->button() == Qt::LeftButton
-            && state() == NoState)
+    if (index.isValid() && event->button() == Qt::LeftButton && !event->modifiers() && state() == NoState)
         emit opened(index);
 }
 
@@ -454,13 +450,25 @@ IconView::mousePressEvent(QMouseEvent *event)
 }
 
 void
+IconView::keyPressEvent(QKeyEvent *event) {
+    if ((event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) && state() == NoState) {
+        if (currentIndex().isValid()) {
+            edit(currentIndex()); // Rename on Enter
+            event->accept();
+            return;
+        }
+    }
+    KCategorizedView::keyPressEvent(event);
+}
+
+void
 IconView::wheelEvent(QWheelEvent *e)
 {
     if (e->modifiers() & Qt::CTRL)
     {
         MainWindow *mw = static_cast<MainWindow *>(window());
         if (QSlider *s = mw->iconSizeSlider())
-            s->setValue(s->value()+(e->delta()>0?1:-1));
+            s->setValue(s->value() + (e->angleDelta().y() > 0 ? 1 : -1));
     }
     else
         KCategorizedView::wheelEvent(e);

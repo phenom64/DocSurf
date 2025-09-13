@@ -5,7 +5,7 @@
 #include <QAction>
 
 class KNewFileMenu;
-namespace KDFM
+namespace DocSurf
 {
 class MainWindow;
 class ActionContainer

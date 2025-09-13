@@ -2,13 +2,15 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(DocSurf)
 
-file(GLOB_RECURSE KDFM_SRCS *.cpp)
-file(GLOB_RECURSE KDFM_HDRS *.h)
-file(GLOB_RECURSE KDFM_UIS  *.ui)
+include(KDEInstallDirs)
 
-qt5_wrap_ui(KDFM_UI_SRCS ${KDFM_UIS})
+file(GLOB_RECURSE DOCSURF_SRCS *.cpp)
+file(GLOB_RECURSE DOCSURF_HDRS *.h)
+file(GLOB_RECURSE DOCSURF_UIS  *.ui)
 
-add_executable(DocSurf ${KDFM_SRCS} ${KDFM_HDRS} ${KDFM_UI_SRCS})
+qt5_wrap_ui(DOCSURF_UI_SRCS ${DOCSURF_UIS})
+
+add_executable(DocSurf ${DOCSURF_SRCS} ${DOCSURF_HDRS} ${DOCSURF_UI_SRCS})
 
 target_link_libraries(DocSurf
     Qt5::DBus
@@ -35,4 +37,4 @@ target_link_libraries(DocSurf
 
 install(TARGETS DocSurf DESTINATION bin)
 install(FILES DocSurf.desktop DESTINATION share/applications)
-install(FILES kdfmui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/DocSurf)
+install(FILES DocSurfui.rc DESTINATION ${KXMLGUI_INSTALL_DIR})

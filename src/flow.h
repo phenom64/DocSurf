@@ -26,7 +26,7 @@
 
 class QModelIndex;
 class QItemSelectionModel;
-namespace KDFM
+namespace DocSurf
 {
 namespace FS { class ProxyModel; }
 class Flow : public QGraphicsView

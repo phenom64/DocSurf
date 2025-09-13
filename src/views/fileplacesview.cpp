@@ -13,7 +13,7 @@
 #include <QModelIndex>
 #include <QTimer>
 
-using namespace KDFM;
+using namespace DocSurf;
 
 class FilePlacesView::Private
 {

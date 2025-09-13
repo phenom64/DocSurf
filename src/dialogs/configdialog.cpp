@@ -41,7 +41,7 @@ public:
     void readSettings()
     {
         //Config pointer
-        KSharedConfigPtr config = KSharedConfig::openConfig("kdfm.conf");
+        KSharedConfigPtr config = KSharedConfig::openConfig("NSEDocSurf.conf");
 
         //Startup
         KConfigGroup general = config->group("General");
@@ -75,7 +75,7 @@ public:
     void writeSettings()
     {
         //Config pointer
-        KSharedConfigPtr config = KSharedConfig::openConfig("kdfm.conf");
+        KSharedConfigPtr config = KSharedConfig::openConfig("NSEDocSurf.conf");
 
         //General
         KConfigGroup general = config->group("General");

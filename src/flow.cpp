@@ -52,7 +52,7 @@
 #include "flow.h"
 #include "fsmodel.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 
 #define ANGLE 66.0f
 #define SCALE 0.80f
@@ -467,7 +467,7 @@ Flow::wheelEvent(QWheelEvent *event)
 {
     if (event->modifiers() & Qt::ControlModifier)
     {
-        if (event->delta() > 0)
+        if (event->angleDelta().y() > 0)
             d->perception += 1;
         else
             d->perception -= 1;
@@ -475,9 +475,9 @@ Flow::wheelEvent(QWheelEvent *event)
         d->rootItem->setTransform(QTransform().translate(rect().width()/2.0f, y).rotate(d->perception, Qt::XAxis).translate(-rect().width()/2.0f, -y));
     }
     else if (event->modifiers() & Qt::MetaModifier)
-        d->rootItem->setScale(d->rootItem->scale()+((float)event->delta()*0.001f));
+        d->rootItem->setScale(d->rootItem->scale()+((float)event->angleDelta().y()*0.001f));
     else
-        d->scrollBar->setValue(d->scrollBar->value()+(event->delta()>0?-1:1));
+        d->scrollBar->setValue(d->scrollBar->value()+(event->angleDelta().y()>0?-1:1));
 //        QCoreApplication::sendEvent(d->scrollBar, event);
 }
 

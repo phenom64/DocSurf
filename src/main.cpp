@@ -38,9 +38,9 @@ int main(int argc, char *argv[])
             const QUrl url = QUrl::fromUserInput(app.arguments().at(1));
             if (!url.isValid())
                 return 0;
-            static const QString destination("org.kde.kdfm");
-            static const QString path("/KdfmAdaptor");
-            static const QString interface("org.kde.kdfm");
+            static const QString destination("com.syndromatic.docsurf");
+            static const QString path("/DocSurfAdaptor");
+            static const QString interface("com.syndromatic.docsurf");
             static const QString method("openUrl");
             QDBusMessage msg = QDBusMessage::createMethodCall(destination, path, interface, method);
             msg << url.toString();
@@ -50,9 +50,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-        KDFM::MainWindow *mainWin = new KDFM::MainWindow(app.arguments());
+        DocSurf::MainWindow *mainWin = new DocSurf::MainWindow(app.arguments());
         mainWin->show();
         return app.exec();
     }
 }
-

@@ -28,7 +28,7 @@
 #include <QStandardPaths>
 #endif
 
-static QString name = "kdfm_browser";
+static QString name = "docsurf";
 
 Application::Application(int &argc, char *argv[]) : QApplication(argc, argv)
 {
@@ -45,9 +45,9 @@ Application::Application(int &argc, char *argv[]) : QApplication(argc, argv)
     {
         if (!m_server->listen(name))
             qDebug() << "Wasnt able to start the localServer... IPC will not work right";
-        setOrganizationName("dfm");
+        setOrganizationName("Syndromatic");
+        setOrganizationDomain("syndromatic.com");
+        setApplicationName("DocSurf");
     }
 }
-
-
 

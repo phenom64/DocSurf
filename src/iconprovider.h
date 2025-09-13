@@ -27,7 +27,7 @@
 #include <QImage>
 #include <QPainter>
 
-namespace KDFM
+namespace DocSurf
 {
 namespace IconProvider
 {

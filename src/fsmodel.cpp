@@ -69,7 +69,7 @@
 
 #include "fsmodel.h"
 
-using namespace KDFM;
+using namespace DocSurf;
 using namespace FS;
 
 DirLister::DirLister(QObject *parent) : KDirLister(parent)
@@ -132,7 +132,7 @@ ProxyModel::ProxyModel(QObject *parent)
 void
 ProxyModel::reconfigure()
 {
-    KConfigGroup config = KSharedConfig::openConfig("kdfm.conf")->group("Views");
+    KConfigGroup config = KSharedConfig::openConfig("NSEDocSurf.conf")->group("Views");
     setCategorizedModel(config.readEntry("Categorized", false));
 }
 
@@ -417,7 +417,7 @@ PreviewLoader::~PreviewLoader()
 void
 PreviewLoader::reconfigure()
 {
-    KConfigGroup config = KSharedConfig::openConfig("kdfm.conf")->group("Views");
+    KConfigGroup config = KSharedConfig::openConfig("NSEDocSurf.conf")->group("Views");
     m_plugins = config.readEntry("PreviewPlugins", KIO::PreviewJob::defaultPlugins());
     m_loadRemote = config.readEntry("RemotePreviews", false);
     m_queue.clear();

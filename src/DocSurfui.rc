@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gui name="kdfm"
+<gui name="DocSurf"
      version="1"
      xmlns="http://www.kde.org/standards/kxmlgui/1.0"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -45,6 +45,10 @@
             <text>&amp;Get</text>
             <Action name="actionGetFileName"/>
             <Action name="actionGetFilePath"/>
+        </Menu>
+        <Menu name="help">
+            <text>&amp;Help</text>
+            <Action name="help_about_app"/>
         </Menu>
     </MenuBar>
     <ToolBar name="mainToolBar">

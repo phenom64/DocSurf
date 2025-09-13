@@ -26,7 +26,7 @@
 #include "widgets.h"
 
 class QTimer;
-namespace KDFM
+namespace DocSurf
 {
 
 class SearchBox;
