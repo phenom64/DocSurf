@@ -226,7 +226,7 @@ MainWindow::MainWindow(const QStringList &arguments)
     d->statusBarWidget = new DocSurf::StatusBar(this);
     d->placesDock = new DockWidget(d->tabWin, tr("Places"), Qt::SubWindow, Qt::LeftDockWidgetArea);
     d->placesView = new FilePlacesView();
-    d->iconSizeSlider = new QSlider(statusBar());
+    d->iconSizeSlider = new QSlider(d->statusBarWidget);
     d->tabBar = new TabBar(this);
     d->tabManager = new TabManager(d->tabWin);
     d->tabManager->setTabBar(d->tabBar);
@@ -268,6 +268,8 @@ MainWindow::MainWindow(const QStringList &arguments)
     });
 
     setStandardToolBarMenuEnabled(true);
+    // Ensure our custom status bar is active before we populate it
+    setStatusBar(d->statusBarWidget);
     setupTerminal();
     setupStatusBar();
 
@@ -303,7 +305,6 @@ MainWindow::MainWindow(const QStringList &arguments)
 
     setCentralWidget(center);
     setUnifiedTitleAndToolBarOnMac(true);
-    setStatusBar(d->statusBarWidget);
 
     d->actionContainer->action(ActionContainer::ShowMenuBar)->setChecked(true);
 //    Actions::action(Actions::ShowPathBar)->setChecked(Store::settings()->value("pathVisible", true).toBool());

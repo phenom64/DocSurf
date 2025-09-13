@@ -25,9 +25,11 @@
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusInterface>
+#include <KLocalizedString>
 
 int main(int argc, char *argv[])
 {
+    KLocalizedString::setApplicationDomain("docsurf");
     Application app(argc, argv);
     qRegisterMetaType<KFileItem>("KFileItem");
     qRegisterMetaType<KFileItemList>("KFileItemList");

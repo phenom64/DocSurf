@@ -37,4 +37,6 @@ target_link_libraries(DocSurf
 
 install(TARGETS DocSurf DESTINATION bin)
 install(FILES DocSurf.desktop DESTINATION share/applications)
-install(FILES DocSurfui.rc DESTINATION ${KXMLGUI_INSTALL_DIR})
+# KXMLGUI expects ui.rc in a subdirectory named after the component
+# e.g. share/kxmlgui5/DocSurf/DocSurfui.rc
+install(FILES DocSurfui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/DocSurf)
